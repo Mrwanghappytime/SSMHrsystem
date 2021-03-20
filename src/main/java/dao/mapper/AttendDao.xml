@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AttendDao">
+    <resultMap id="attendMap" type="po.Attend">
+        <id property="id" column="id" jdbcType="INTEGER"></id>
+        <result property="dutyDate" column="duty_date" jdbcType="DATE"></result>
+        <result property="punchTime" column="punch_time" jdbcType="VARCHAR"></result>
+        <result property="commed" column="commed" jdbcType="BOOLEAN"></result>
+        <result property="attendTypeId" column="attendtype_id" jdbcType="INTEGER"></result>
+        <result property="employeeId" column="emp_id" jdbcType="INTEGER"></result>
+        <result property="isMan" column="isman" jdbcType="BOOLEAN"></result>
+    </resultMap>
+    <select id="selectAttend" resultMap="attendMap" parameterType="po.Attend">
+        select * from attend where 1=1
+        <if test="id !=null">
+            and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="commed !=null">
+            and commed = #{commed,jdbcType=BOOLEAN}
+        </if>
+        <if test="dutyDate !=null">
+            and duty_date = #{dutyDate,jdbcType=DATE}
+        </if>
+        <if test="attendTypeId !=null">
+            and attendtype_id = #{attendTypeId,jdbcType=INTEGER}
+        </if>
+        <if test="employeeId !=null">
+            and emp_id = #{employeeId,jdbcType=INTEGER}
+        </if>
+        <if test="isMan != null">
+            and isman = #{isMan,jdbcType=BOOLEAN}
+        </if>
+    </select>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into attend(duty_date,emp_id,isman,commed,attendtype_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            （#{item.dutyDate,jdbcType=TIMESTAMP},#{item.employeeId,jdbcType=INTEGER},#{item.isMan,jdbcType=BOOLEAN},#{item.commed,jdbcType=BOOLEAN},#{item.attendTypeId,jdbcType=INTEGER}）
+        </foreach>
+    </insert>
+    <insert id="insertAttend" parameterType="po.Attend">
+        insert into attend(duty_date,punch_time,commed,emp_id,isman) values(#{dutyDate,jdbcType=DATE},#{punchTime,jdbcType=VARCHAR},#{commed,jdbcType=BOOLEAN},#{employeeId,jdbcType=INTEGER},#{isMan,jdbcType=BOOLEAN})
+    </insert>
+    <update id="updateAttend" parameterType="po.Attend">
+        update attend
+         <trim suffix="set" suffixOverrides=",">
+            <if test="commed!=null">
+                punch_time = #{punchTime,jdbcType=TIMESTAMP},
+            </if>
+             <if test="attendTypeId!=null">
+                 attendtype_id = #{attendTypeId,jdbcType=INTEGER},
+             </if>
+         </trim>
+         WHERE emp_id = #{employeeId,jdbcType=INTEGER} and isMan = #{isMan,jdbcType=BOOLEAN}
+    </update>
+    <select id="selectAttendCount" parameterType="po.Attend" resultType="INTEGER">
+        select count(*) from attend where emp_id = #{employeeId,jdbcType=INTEGER} and duty_date = #{dutyDate,jdbcType=TIMESTAMP} and commed = null
+    </select>
+
+    <select id="selectAttendUnPunch" parameterType="po.Attend" resultType="vo.AttendVo">
+        select a.id as id, date(a.duty_date) as dutyDate ,a.punch_time as punchTime , b.name as attendType   from attend as a left outer join attendtype as b on a.attendtype_id = b.id where a.isman = #{isMan} and a.emp_id = #{employeeId} and b.id != 1 and a.duty_date != curdate()
+    </select>
+
+    <update id="autoSetAttendType">
+         call updateAttendAuto()
+    </update>
+
+</mapper>

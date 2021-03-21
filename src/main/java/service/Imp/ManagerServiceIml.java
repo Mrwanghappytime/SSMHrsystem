@@ -19,7 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
 @Service("managerService")
 public class ManagerServiceIml implements ManagerService {
     @Autowired

@@ -8,7 +8,8 @@ import service.AttendTypeService;
 import vo.OparationVO;
 
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
 @Service("attendTypeService")
 public class AttendTypeServiceImp implements AttendTypeService {
     @Autowired

@@ -11,7 +11,8 @@ import vo.OparationVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
 @Service("applicationService")
 public class ApplicationServiceImp implements ApplicationService {
     @Autowired

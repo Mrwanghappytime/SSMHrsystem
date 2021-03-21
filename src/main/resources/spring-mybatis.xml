@@ -38,4 +38,9 @@
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"></property>
         <property name="basePackage" value="dao"></property>
     </bean>
+	<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+	
 </beans>

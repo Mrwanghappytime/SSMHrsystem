@@ -12,6 +12,8 @@ import vo.PaymentVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
 @Service("paymentService")
 public class PaymentServiceImp implements PaymentService {
     @Autowired

@@ -11,7 +11,8 @@ import vo.BaseVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
 @Service("baseService")
 public class BaseServiceIml implements BaseService {
     @Autowired

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+    <context:component-scan base-package="realms"/>
+    <bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
+        <property name="authenticator" ref="authenticator"></property>
+        <property name="authorizer" ref="authorizer"></property>
+    </bean>
+    <bean class="org.apache.shiro.authz.ModularRealmAuthorizer" id="authorizer">
+        <property name="realms">
+            <list>
+                <ref bean="employeeRealm"></ref>
+                <ref bean="managerRealm"></ref>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.apache.shiro.authc.pam.ModularRealmAuthenticator" id="authenticator">
+        <property name="authenticationStrategy" ref="atLeastOneSuccessfulStrategy"></property>
+        <property name="realms">
+            <list>
+                <ref bean="employeeRealm"></ref>
+                <ref bean="managerRealm"></ref>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy" id="atLeastOneSuccessfulStrategy"></bean>
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"></property>
+        <property name="loginUrl" value="/login"></property>
+        <property name="unauthorizedUrl" value="/unauthorizedUrl"></property>
+        <property name="filterChainDefinitions">
+            <value>
+                /=anon
+                /bootstrap/**=anon
+                /image/**=anon
+                /check=anon
+                /index.jsp=anon
+                /authImg=anon
+                /login=anon
+                /logout=logout
+                /indexOfEmployee=roles["employee"]
+                /indexOfManager=roles["manager"]
+                /employee/**=roles["employee"]
+                /manager/**=roles["manager"]
+                /** = authc
+            </value>
+        </property>
+    </bean>
+</beans>

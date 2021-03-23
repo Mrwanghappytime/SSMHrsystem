@@ -6,21 +6,17 @@ import dao.EmployeeDao;
 import dao.ManagerDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import po.Attend;
+import org.springframework.transaction.annotation.Transactional;
 import po.Employee;
 import service.EmployeeService;
 import vo.AttendVo;
 import vo.OparationVO;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
-@Transactional
+
 @Service("employeeService")
+@Transactional
 public class EmployeeServiceIml implements EmployeeService {
     @Autowired
     private AttendDao attendDao;
@@ -40,6 +36,11 @@ public class EmployeeServiceIml implements EmployeeService {
     @Override
     public OparationVO<List<AttendVo>> viewUnPunch(HttpServletRequest request) {
         return utilsService.viewUnPunch(request,0,attendDao);
+    }
+
+    @Override
+    public List<Employee> getEmployee(Employee employee) {
+        return employeeDao.selectEmployee(employee);
     }
 
 

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface PaymentService {
-    OparationVO<List<Payment>> getPayment(HttpServletRequest request,int type);
+    OparationVO<List<Payment>> getPayment(HttpServletRequest request, int type);
 
     void balanceSalary();
 }

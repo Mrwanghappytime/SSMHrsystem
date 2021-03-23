@@ -3,6 +3,7 @@ package service.Imp;
 import dao.PaymentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import po.Employee;
 import po.Manager;
 import po.Payment;
@@ -12,9 +13,9 @@ import vo.PaymentVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
-@Transactional
+
 @Service("paymentService")
+@Transactional
 public class PaymentServiceImp implements PaymentService {
     @Autowired
     private PaymentDao paymentDao;
@@ -22,7 +23,7 @@ public class PaymentServiceImp implements PaymentService {
     private UtilsService utilsService;
 
     @Override
-    public OparationVO<List<Payment>> getPayment(HttpServletRequest request,int type) {
+    public OparationVO<List<Payment>> getPayment(HttpServletRequest request, int type) {
         Payment payment = new Payment();
         fillPayment(request,type,payment);
         if(payment.getEid() == null){
@@ -55,7 +56,7 @@ public class PaymentServiceImp implements PaymentService {
             }
         }
     }
-    private void fillPayment(HttpServletRequest request,int type,Payment payment){
+    private void fillPayment(HttpServletRequest request, int type, Payment payment){
         if(type == 0){
             Employee employee = (Employee) request.getSession().getAttribute("user");
             payment.setEmployee(true);

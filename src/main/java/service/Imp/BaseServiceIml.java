@@ -4,6 +4,7 @@ import dao.EmployeeDao;
 import dao.ManagerDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import po.Employee;
 import po.Manager;
 import service.BaseService;
@@ -11,9 +12,9 @@ import vo.BaseVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
-@Transactional
+
 @Service("baseService")
+@Transactional
 public class BaseServiceIml implements BaseService {
     @Autowired
     private ManagerDao managerDao;

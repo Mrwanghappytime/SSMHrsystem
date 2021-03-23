@@ -1,7 +1,12 @@
 package configuration;
 import email.EmailSession;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+import realms.EmployeeRealm;
+import realms.ManagerRealm;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -9,6 +14,7 @@ import javax.mail.Session;
 import java.util.Properties;
 
 @Configuration
+@ImportResource("classpath:spring-shiro.xml")
 public class HrsystemConfiguration {
     private String from = "xxxx@qq.com";
     private String password = "xxx";
@@ -29,5 +35,26 @@ public class HrsystemConfiguration {
             }
         };
         return new EmailSession(Session.getDefaultInstance(properties,authenticator));
+    }
+    @Bean("credentialsMatcher")
+    public HashedCredentialsMatcher hashedCredentialsMatcher(){
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        hashedCredentialsMatcher.setHashIterations(1024);
+        return hashedCredentialsMatcher;
+    }
+    @Bean("employeeRealm")
+    @Autowired
+    public EmployeeRealm employeeRealm(HashedCredentialsMatcher hashedCredentialsMatcher){
+        EmployeeRealm employeeRealm = new EmployeeRealm();
+        employeeRealm.setCredentialsMatcher(hashedCredentialsMatcher);
+        return employeeRealm;
+    }
+    @Bean("managerRealm")
+    @Autowired
+    public ManagerRealm managerRealm(HashedCredentialsMatcher hashedCredentialsMatcher){
+        ManagerRealm managerRealm = new ManagerRealm();
+        managerRealm.setCredentialsMatcher(hashedCredentialsMatcher);
+        return managerRealm;
     }
 }

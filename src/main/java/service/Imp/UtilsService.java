@@ -3,7 +3,6 @@ package service.Imp;
 import dao.AttendDao;
 import email.EmailSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import po.Attend;
 import po.Employee;
@@ -14,14 +13,14 @@ import vo.OparationVO;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.mail.internet.*;
 
 @Service("utilsService")
 public class UtilsService {
@@ -30,7 +29,7 @@ public class UtilsService {
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
     private static SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm:ss");
-    public  OparationVO punch(HttpServletRequest request, int type, AttendDao attendDao){
+    public OparationVO punch(HttpServletRequest request, int type, AttendDao attendDao){
         Date date = new Date();
         String str = simpleDateFormat.format(date);
         //attend.setDutyDate(simpleDateFormat1.parse(str.substring(0,10)));

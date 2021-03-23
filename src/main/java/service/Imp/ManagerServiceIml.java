@@ -5,24 +5,20 @@ import dao.EmployeeDao;
 import dao.ManagerDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import po.Attend;
+import org.springframework.transaction.annotation.Transactional;
 import po.Employee;
 import po.Manager;
-import po.Payment;
 import service.ManagerService;
 import vo.OparationVO;
 import vo.PaymentVo;
 
-import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
-@Transactional
+
 @Service("managerService")
+@Transactional
 public class ManagerServiceIml implements ManagerService {
+
     @Autowired
     private AttendDao attendDao;
     @Autowired
@@ -74,6 +70,10 @@ public class ManagerServiceIml implements ManagerService {
         }
     }
 
+    @Override
+    public List<Manager> getManager(Manager manager) {
+        return managerDao.selectManager(manager);
+    }
 
 
 }

@@ -3,14 +3,15 @@ package service.Imp;
 import dao.AttendTypeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import po.AttendType;
 import service.AttendTypeService;
 import vo.OparationVO;
 
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
-@Transactional
+
 @Service("attendTypeService")
+@Transactional
 public class AttendTypeServiceImp implements AttendTypeService {
     @Autowired
     private AttendTypeDao attendTypeDao;

@@ -3,6 +3,7 @@ package service.Imp;
 import dao.ApplicationDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import po.Application;
 import po.Manager;
 import service.ApplicationService;
@@ -11,7 +12,7 @@ import vo.OparationVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
+
 @Transactional
 @Service("applicationService")
 public class ApplicationServiceImp implements ApplicationService {

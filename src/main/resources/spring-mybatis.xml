@@ -18,8 +18,8 @@
     <bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${driver}"></property>
         <property name="url" value="${url}"></property>
-        <property name="username" value="${username}"></property>
-        <property name="password" value="${password}"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="123456"></property>
         <property name="maxActive" value="200">
         </property>
         <property name="maxWait" value="200">

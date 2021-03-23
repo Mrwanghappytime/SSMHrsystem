@@ -6,7 +6,7 @@ import vo.PaymentVo;
 import java.util.List;
 
 public interface EmployeeDao {
-    public List<Employee> selectEmployee(Employee employee);
+    List<Employee> selectEmployee(Employee employee);
 
     List<Employee> selectEmployeeByManagerId(Integer id);
 

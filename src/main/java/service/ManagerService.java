@@ -1,6 +1,7 @@
 package service;
 
 import po.Employee;
+import po.Manager;
 import vo.OparationVO;
 import vo.PaymentVo;
 
@@ -15,4 +16,6 @@ public interface ManagerService {
     OparationVO<List<PaymentVo>> viewDeptSal(Integer id);
 
     OparationVO addEmp(Employee employee);
+
+    List<Manager> getManager(Manager manager);
 }

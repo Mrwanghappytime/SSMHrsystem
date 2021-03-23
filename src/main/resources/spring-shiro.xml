@@ -44,7 +44,7 @@
             <value>
                 /=anon
                 /bootstrap/**=anon
-                /image/**=anon
+                /images/**=anon
                 /check=anon
                 /index.jsp=anon
                 /authImg=anon
